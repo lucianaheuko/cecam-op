@@ -1,0 +1,23 @@
+<ion-view view-title="Entradas" ng-controller="EntradasCtrl">
+  <ion-content class="padding">
+    <h1 class="title">Items</h1>
+    <button class="button button-icon ion-plus" ng-click="openNovaEntradaModal()"> adicionar
+    </button>
+
+    <ion-list>
+
+      <ion-item
+        class="list card"
+        ng-repeat="operacao in operacoes"
+        href="#/tab/entradas/{{ operacao.$id }}">
+
+        <div class="item item-body">
+          <h2>{{ operacao.descricao }}</h2>
+          <p>{{ operacao.validade | date:'dd MMMM yyyy' }}</p>
+          <p>{{ operacao.quantidade }}</p>
+        </div>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

@@ -1,4 +1,10 @@
-angular.module('starter.services', [])
+angular.module('cecamOp.services', [])
+
+.factory('Operacoes', function($firebaseArray) {
+  var itemsRef = new Firebase("https://cecam.firebaseio.com/Operacoes");
+  return $firebaseArray(itemsRef);
+})
+
 
 .factory('Chats', function() {
   // Might use a resource here that returns a JSON array
