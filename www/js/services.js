@@ -6,51 +6,70 @@ angular.module('cecamOp.services', [])
 })
 
 
-.factory('Chats', function() {
+.factory('Distribuicoes', function() {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
-  var chats = [{
+  var distribuicoes = [{
     id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
+    name: 'Carmo',
+    date: '3 marc 2016',
+    status: 'a separar'
   }, {
     id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
+    name: 'Itaquera',
+    date: '4 marc 2016',
+    status: 'separando...'
   }, {
     id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
+    name: 'Santos',
+    date: '4 marc 2016',
+    status: 'pronto para retirar'
   }, {
     id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
+    name: 'Carmo',
+    date: '4 marc 2016',
+    status: 'a separar'
   }];
 
   return {
     all: function() {
-      return chats;
+      return distribuicoes;
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    remove: function(distribuicao) {
+      distribuicoes.splice(distribuicoes.indexOf(distribuicao), 1);
+    }
+  };
+})
+
+.factory('Datas', function() {
+  var datas = [{
+    id: 0,
+    date: 'dia3'
+  }, {
+    id: 1,
+    date: 'dia4'
+  }, {
+    id: 2,
+    date: 'dia5'
+  }, {
+    id: 3,
+    date: 'dia6'
+  }];
+
+  return {
+    all: function() {
+      return datas;
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
+    get: function(dataId) {
+      for (var i = 0; i < datas.length; i++) {
+        if (datas[i].id === parseInt(dataId)) {
+          return datas[i];
         }
       }
       return null;
     }
   };
 });
+
+

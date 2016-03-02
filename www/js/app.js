@@ -65,26 +65,47 @@ angular.module('cecamOp', ['ionic', 'cecamOp.controllers', 'cecamOp.services', '
     views: {
       'tab-separacao': {
         templateUrl: 'templates/tab-separacao.html',
-        controller: 'SeparacaoCtrl'
-      }
-    }
-  })
-  .state('tab.separacao-detalhamento', {
-    url: '/separacao/:separacaoId',
-    views: {
-      'tab-separacao': {
-        templateUrl: 'templates/separacao-detalhamento.html',
-        controller: 'ChatDetailCtrl'
+        controller: 'SeparacaoDataCtrl'
       }
     }
   })
 
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.separacao-distribuicoes', {
+    url: '/separacao/:dataDate',
     views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+      'tab-separacao': {
+        templateUrl: 'templates/separacao-distribuicoes.html',
+        controller: 'SeparacaoDistribuicoesCtrl'
+      }
+    }
+  })
+
+  .state('tab.separacao-detalhamento', {
+    url: '/separacao/:distribuicaoDate/:distribuicaoName',
+    views: {
+      'tab-separacao': {
+        templateUrl: 'templates/separacao-detalhamento.html',
+        controller: 'SeparacaoDetailCtrl'
+      }
+    }
+  })
+
+  .state('tab.saida', {
+    url: '/saida',
+    views: {
+      'tab-saida': {
+        templateUrl: 'templates/tab-saida.html',
+        controller: 'SaidaCtrl'
+      }
+    }
+  })
+
+  .state('tab.saida-detalhamento', {
+    url: '/saida/:saidaId',
+    views: {
+      'tab-saida': {
+        templateUrl: 'templates/saida-detalhamento.html',
+        controller: 'SaidaDetailCtrl'
       }
     }
   });

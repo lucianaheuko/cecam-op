@@ -6,8 +6,8 @@
 -->
 <ion-view view-title="Detalhes de entrada">
   <ion-content class="padding">
-    <p>
-      {{ entrada.descricao }}
-    </p>
+    <h2>{{ entrada.descricao }}</h2>
+	<p>validade: {{ entrada.validade | date:'dd MMMM yyyy' }}</p>
+	<p>{{ entrada.quantidade }} {{ entrada.unidadeDeMedida}}</p>
   </ion-content>
 </ion-view>

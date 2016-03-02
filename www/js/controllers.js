@@ -1,4 +1,68 @@
+var _data = [
+  {
+    id: 0,
+    name: 'Carmo',
+    date: '3 marc 2016',
+    produtos: [
+      {
+        descricao: 'achocolatado em pó',
+        validade: '04 Abr 2016',
+        quantidade: '90',
+        unidadeDeMedida: 'cx'
+      },
+      {
+        descricao: 'leite',
+        validade: '30 Nov 2016',
+        quantidade: '30',
+        unidadeDeMedida: 'cx'
+      }
+    ]
+  }, {
+    id: 1,
+    name: 'Itaquera',
+    date: '3 marc 2016',
+    descricao: 'leite',
+    validade: '30 Nov 2016',
+    quantidade: '30',
+    unidadeDeMedida: 'cx'
+  }, {
+    id: 2,
+    name: 'Santos',
+    date: '3 marc 2016',
+    descricao: 'leite',
+    validade: '30 Nov 2016',
+    quantidade: '30',
+    unidadeDeMedida: 'cx'
+  }];
+
+var db = {
+  listAll: function () {
+    return _data;
+  },
+
+  getById: function (requestedId) {
+    return _data.find(function (item) {
+      return item.id == requestedId;
+    });
+  },
+
+  // getById: function (requestedId) {
+
+  //   return new Promise(function (resolve, reject) {
+
+  //     setTimeout(function () {
+
+  //       resolve(_data.find(function (item) {
+  //         return item.id === requestedId;
+  //       }));
+
+  //     }, 2000);
+  //   });
+  // }
+};
+
 angular.module('cecamOp.controllers', [])
+
 
 .controller('EntradasCtrl', function($scope, $ionicModal, Operacoes) {
 
@@ -86,7 +150,11 @@ angular.module('cecamOp.controllers', [])
   $scope.entrada = Operacoes.$getRecord($stateParams.entradaId);
 })
 
-.controller('SeparacaoCtrl', function($scope, Chats) {
+.controller('SeparacaoDataCtrl', function($scope, Datas) {
+  $scope.datas =  Datas.all();
+})
+
+.controller('SeparacaoDistribuicoesCtrl', function($scope, Distribuicoes, $stateParams) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -95,18 +163,53 @@ angular.module('cecamOp.controllers', [])
   //$scope.$on('$ionicView.enter', function(e) {
   //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+  $scope.distribuicoes = Distribuicoes.all();
+
+  $scope.dataDate = $stateParams.dataDate;
+})
+
+.controller('SeparacaoDetailCtrl', function($scope, $stateParams, Distribuicoes, $state) {
+  $scope.distribuicaoName = $stateParams.distribuicaoName;
+  $scope.distribuicaoDate = $stateParams.distribuicaoDate;
+  $scope.distribuicoes = [
+  {
+    id: 0,
+    name: 'Carmo',
+    date: '3 marc 2016',
+    descricao: 'leite',
+    validade: '30 Nov 2016',
+    quantidade: '30',
+    unidadeDeMedida: 'cx'
+  }, {
+    id: 1,
+    name: 'Carmo',
+    date: '3 marc 2016',
+    descricao: 'achocolatado em pó',
+    validade: '04 Abr 2016',
+    quantidade: '90',
+    unidadeDeMedida: 'cx'
+  }, {
+    id: 2,
+    name: 'Carmo',
+    date: '3 marc 2016',
+    descricao: 'biscoito club social sabor parmesão',
+    validade: '03 Jun 2016',
+    quantidade: '37',
+    unidadeDeMedida: 'cx'
+  }];
+
+  $scope.cancel = function () {
+    $state.go('tab.separacao-distribuicoes');
   };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('SaidaCtrl', function($scope) {
+  $scope.saidas = db.listAll();
+
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+.controller('SaidaDetailCtrl', function($scope, $stateParams) {
+
+  $scope.resultado = db.getById($stateParams.saidaId);
+
 });

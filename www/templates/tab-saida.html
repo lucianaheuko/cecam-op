@@ -1,0 +1,16 @@
+<ion-view view-title="Saídas">
+  <ion-content>
+    <ion-list class="list">
+
+      <ion-item
+        class="item"
+        ng-repeat="saida in saidas"
+        href="#/tab/saida/{{ saida.id }}">
+
+          <h2>{{ saida.name }}</h2>
+          <p>{{ saida.date | date:'dd MMMM yyyy' }}</p>
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

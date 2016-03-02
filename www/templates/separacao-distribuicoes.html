@@ -1,0 +1,25 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pulls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view view-title="Distribuições">
+  <ion-content>
+  <h1 class="padding">{{ dataDate }}</h1>
+    <ion-list class="list">
+      <ion-item
+        class="item"
+        ng-repeat="distribuicao in distribuicoes"
+        type="item-text-wrap"
+        href="#/tab/separacao/{{ distribuicao.date }}/{{ distribuicao.name }}">
+	        {{ distribuicao.name }}
+	        <!-- <p>{{ distribuicao.date }}</p> -->
+			<span class="item-note" ng-class="{ 
+			statusASeparar: distribuicao.status === 'a separar', 
+			statusSeparando: distribuicao.status === 'separando...', 
+			statusProntoParaRetirar: distribuicao.status === 'pronto para retirar'}">{{ distribuicao.status }}</span>
+		</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

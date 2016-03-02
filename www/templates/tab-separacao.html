@@ -1,19 +1,31 @@
-<ion-view view-title="Separacao">
+<ion-view view-title="Detalhes das saídas">
   <ion-content>
+
+    <!-- ion-list>
+      <ion-item
+        class="list card"
+        ng-repeat="operacao in operacoes"
+        href="#/tab/entradas/{{ operacao.$id }}">
+
+        <div class="item item-body">
+          <h2>{{ operacao.descricao }}</h2>
+          <p>{{ operacao.validade | date:'dd MMMM yyyy' }}</p>
+          <p>{{ operacao.quantidade }} {{ operacao.unidadeDeMedida}}</p>
+        </div>
+      </ion-item>
+    </ion-list> -->
     <ion-list>
       <ion-item
-        class="item-remove-animate item-avatar item-icon-right"
-        ng-repeat="chat in chats"
+        class="item"
+        ng-repeat="data in datas"
         type="item-text-wrap"
-        href="#/tab/separacao/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
-        <p>{{chat.lastText}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+        href="#/tab/separacao/{{data.date}}">
+        <h2>{{data.date }}</h2>
+<!--         <i class="icon ion-chevron-right icon-accessory"></i>
+ -->
+        <!-- <ion-option-button class="button-assertive" ng-click="remove(unidade)">
           Delete
-        </ion-option-button>
+        </ion-option-button> -->
       </ion-item>
     </ion-list>
   </ion-content>
