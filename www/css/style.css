@@ -6,6 +6,10 @@
     font-size: 14px;
 }
 
+a.no-decoration {
+	text-decoration: none;
+}
+
 .statusASeparar {
 	color: #ef473a; // assertive - red of ionic
 } 
