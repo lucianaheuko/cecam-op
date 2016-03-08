@@ -1,14 +1,23 @@
 <ion-modal-view>
   <ion-header-bar>
     <h1 class="title">Criar nova entrada</h1>
-    <button class="button button-clear button-positive" ng-click="modal.hide()">Cancelar</button>
+    <button class="button button-clear button-positive" ng-click="modalNovaEntrada.hide()">Cancelar</button>
   </ion-header-bar>
   <ion-content>
     <form ng-submit="createEntrada()">
       <div class="list">
-        <label class="item item-input item-stacked-label">
+<!--         <label class="item item-input item-stacked-label">
           <span class="input-label">Descrição</span>
-          <input ng-model="novaEntrada.descricao" type="text" placeholder="Descrição do produto">
+          <input ng-model="novaEntrada.produto.descricao" type="text" placeholder="Descrição do produto">
+        </label> -->
+        <label class="item item-input item-select">
+          <label class="input-label">Produto</label>
+          <select ng-model="novaEntrada.produtoId">
+            <option value="__new__">novo produto</option>
+            <option ng-repeat="produto in produtosRegistrados" value="{{ produto._id }}">
+              {{ produto.descricao }}
+            </option>
+          </select>
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Validade</span>

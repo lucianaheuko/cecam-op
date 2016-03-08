@@ -1,0 +1,22 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title">Cadastrar novo produto</h1>
+    <button class="button button-clear button-positive" ng-click="modalNovoProduto.hide()">Cancelar</button>
+  </ion-header-bar>
+  <ion-content>
+    <form ng-submit="createProduto()">
+      <div class="list">
+        <label class="item item-input item-stacked-label">
+          <span class="input-label">Descrição</span>
+          <input ng-model="novoProduto.descricao" type="text" placeholder="Descrição do produto">
+        </label>
+      </div>
+
+      <div class="padding">
+        <button class="button button-block button-positive" type="submit">
+          Finalizar
+        </button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

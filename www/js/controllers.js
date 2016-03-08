@@ -64,9 +64,25 @@ var db = {
 angular.module('cecamOp.controllers', [])
 
 
-.controller('EntradasCtrl', function($scope, $ionicModal, Operacoes) {
+.controller('EntradasCtrl', function($scope, $ionicModal, Operacao, Produto, Operacoes) {
 
-  $scope.operacoes = Operacoes;
+  // retrieve all operations
+  Operacao.list()
+    .then(function (response) {
+      console.log(response.data);
+      $scope.operacoes = response.data;
+    });
+
+  // retrieve the list of registered products
+  Produto.list()
+    .then(function (response) {
+
+      $scope.produtosRegistrados = response.data;
+    });
+
+
+  ////////////////////
+  // MODAL CREATION //
 
   // create an $ionic modal instance and attach it to the scope
   // so that other functions may use the modal
@@ -75,19 +91,92 @@ angular.module('cecamOp.controllers', [])
     animation: 'slide-in-up',
   })
   .then(function (modal) {
-    $scope.modal = modal;
+    $scope.modalNovaEntrada = modal;
   });
+
+  $ionicModal.fromTemplateUrl('templates/novo-produto.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  })
+  .then(function (modal) {
+    $scope.modalNovoProduto = modal;
+  });
+
+  // MODAL CREATION //
+  ////////////////////
 
   // Define an object to hold the form input values
   $scope.novaEntrada = {
-    descricao: '',
+    produtoId: '',
     validade: '',
     quantidade: '',
     unidadeDeMedida: 'cx',
   };
 
+  $scope.$watch('novaEntrada.produtoId', function () {
+    console.log($scope.novaEntrada.produtoId);
+
+    var produtoId = $scope.novaEntrada.produtoId;
+
+    if (produtoId === '__new__') {
+      $scope.modalNovoProduto.show();
+    } else {
+      // do nothing
+    }
+  });
+
+  ////////////////////
+  /// NOVO PRODUTO ///
+  $scope.novoProduto = {};
+  
+  $scope.openModalNovoProduto = function () {
+    $scope.modalNovoProduto.show();
+  };
+
+  $scope.createProduto = function () {
+    console.log('create');
+
+    if (!$scope.novoProduto.descricao) {
+      alert('Descrição é um campo obrigatório');
+      return;
+    }
+
+    Produto.create({
+      descricao: $scope.novoProduto.descricao
+    })
+    .then(function (response) {
+
+      console.log(response);
+
+      var produto = response.data;
+
+      // add the product to the produtosRegistrados array
+      $scope.produtosRegistrados.push(produto);
+
+      console.log(produto._id);
+
+      // set the selected product of the new entry as the
+      // just created product
+      $scope.novaEntrada.produtoId = produto._id;
+
+      // TODO: make the newly created product the selected one on the UI
+
+      $scope.modalNovoProduto.hide();
+
+      return produto;
+    });
+  };
+
+  /// NOVO PRODUTO ///
+  ////////////////////
+
+
+  ////////////////////
+  /// NOVA ENTRADA ///
+  $scope.novaEntrada = {};
+
   $scope.openNovaEntradaModal = function () {
-    $scope.modal.show();
+    $scope.modalNovaEntrada.show();
   };
 
   $scope.createEntrada = function () {
@@ -95,8 +184,8 @@ angular.module('cecamOp.controllers', [])
     $scope.isLoading = true;
 
     // run validations
-    if (!$scope.novaEntrada.descricao) {
-      alert('Descrição é um campo obrigatório');
+    if (!$scope.novaEntrada.produtoId) {
+      alert('Produto é um campo obrigatório');
       return;
     }
 
@@ -115,32 +204,69 @@ angular.module('cecamOp.controllers', [])
       return;
     }
 
-    Operacoes.$add({
-      descricao: $scope.novaEntrada.descricao,
-      validade: $scope.novaEntrada.validade.getTime(),
-      quantidade: $scope.novaEntrada.quantidade,
-      unidadeDeMedida: $scope.novaEntrada.unidadeDeMedida,
-    })
-    .then(function (ref) {
+    // retrieve the selected product
+    Produto.get($scope.novaEntrada.produtoId)
+      .then(function (response) {
 
-      $scope.isLoading = false;
+        console.log(response);
+        console.log(response.data);
 
-      // reset the novaEntrada's data
-      $scope.novaEntrada = {
-        descricao: '',
-        validade: '',
-        quantidade: '',
-        unidadeDeMedida: 'cx',
-      };
+        var produto = response.data;
 
-      // close the modal
-      $scope.modal.hide();
-    }, function (err) {
-      $scope.isLoading = false;
+        if (!produto) { throw new Error('produto nao encontrado'); }
 
-      console.warn(err);
-    });
+        return Operacao.create({
+          produto: produto,
+          quantidade: $scope.novaEntrada.quantidade,
+          unidadeDeMedida: $scope.novaEntrada.unidadeDeMedida,
+          tipo: 'entrada',
+        });
+      })
+      .then(function (entrada) {
+
+        $scope.isLoading = false;
+
+        // reset the novaEntrada's data
+        $scope.novaEntrada = {
+          produtoId: '',
+          validade: '',
+          quantidade: '',
+          unidadeDeMedida: 'cx',
+        };
+
+        // push the new entry to the entries array
+        $scope.operacoes.unshift(entrada);
+
+        // close the modal
+        $scope.modalNovaEntrada.hide();
+      }, function (err) {
+        $scope.isLoading = false;
+
+        console.warn(err);
+      });
+
+    // Operacao.create({
+    //   produto: {
+
+    //     descricao: $scope.novaEntrada.produto.descricao,
+    //     validade: $scope.novaEntrada.produto.validade,
+    //   },
+
+    //   quantidade: $scope.novaEntrada.quantidade,
+    //   unidadeDeMedida: $scope.novaEntrada.unidadeDeMedida,
+    //   tipo: 'entrada',
+
+    // })
+    // // Operacoes.$add({
+    // //   descricao: $scope.novaEntrada.descricao,
+    // //   validade: $scope.novaEntrada.validade,
+    // //   quantidade: $scope.novaEntrada.quantidade,
+    // //   unidadeDeMedida: $scope.novaEntrada.unidadeDeMedida,
+    // // })
   };
+
+  /// NOVA ENTRADA ///
+  ////////////////////
 
 })
 

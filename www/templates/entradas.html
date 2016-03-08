@@ -13,8 +13,8 @@
         <a href="#/tab/entradas/{{ operacao.$id }}" class="no-decoration">
 
           <div class="item item-body">
-            <h2>{{ operacao.descricao }}</h2>
-            <p>{{ operacao.validade | date:'dd MMMM yyyy' }}</p>
+            <h2>{{ operacao.produto.descricao }}</h2>
+            <p>{{ operacao.produto.validade | date:'dd MMMM yyyy' }}</p>
             <p>{{ operacao.quantidade }} {{ operacao.unidadeDeMedida}}</p>
           </div>
         </a>
