@@ -50,6 +50,13 @@ angular.module('cecamOp.services', [])
         });
     },
 
+    update: function (distId, distData) {
+      return $http.put('http://localhost:4000/estoque/distribuicao/' + distId, distData)
+        .then(function (response) {
+          return response.data;
+        });
+    },
+
     list: function (query) {
       return $http.get('http://localhost:4000/estoque/distribuicoes', {
         params: query
@@ -64,6 +71,40 @@ angular.module('cecamOp.services', [])
         .then(function (response) {
           return response.data;
         });
+    },
+
+    groupByReceptor: function (query) {
+      return $http.get('http://localhost:4000/estoque/distribuicao/groupByReceptor', {
+          params: query
+        })
+        .then(function (response) {
+          return response.data;
+        });
+    },
+
+    /**
+     * Computes the virtual status of a group of distributions
+     * @param  {Object} distAggregate
+     * @return {String}
+     */
+    computeDistribuicaoAggregateStatus: function (distAggregate) {
+
+      var hasASepararStatus = distAggregate.statuses.indexOf('a-separar') > -1;
+      var hasSeparadoStatus = distAggregate.statuses.indexOf('separado') > -1;
+
+      if (hasASepararStatus && hasSeparadoStatus) {
+        // mixed statuses
+        return 'separando';
+      } else if (hasASepararStatus) {
+        // only a-separar
+        return 'a-separar';
+      } else if (hasSeparadoStatus) {
+        // only separado
+        return 'separado';
+      } else {
+        // default fallback
+        return 'separando';
+      }
     }
   }
 })

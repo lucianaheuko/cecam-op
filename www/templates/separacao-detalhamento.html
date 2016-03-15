@@ -39,7 +39,10 @@
         </div>
           
         <div>
-          <ion-checkbox ng-model="filter.blue">Separado</ion-checkbox>
+          <ion-checkbox
+            ng-model="distribuicao.status"
+            ng-true-value="'separado'"
+            ng-false-value="'a-separar'">Separado</ion-checkbox>
         </div>
      
       
@@ -47,13 +50,12 @@
       
     </div>
 
-
-
-
-    <button class="button button-positive" ng-click=""> Separação concluída
+    <button class="button button-positive" ng-click="save()">
+      Salvar
     </button>
 
-    <button class="button" ng-click="cancel()"> Cancelar
+    <button class="button" ng-click="cancel()">
+      Cancelar
     </button>
 
 

@@ -4,26 +4,28 @@ angular.module('cecamOp.controllers')
 .controller('SeparacaoDataCtrl', function($scope, Distribuicao) {
 
   Distribuicao.groupByDate()
-    .then(function (dates) {
-      $scope.datas = dates;
+    .then(function (distAggregates) {
+      $scope.datas = distAggregates;
     });
 
-  // $scope.datas = Datas.all();
+  $scope.computeDistribuicaoAggregateStatus = Distribuicao.computeDistribuicaoAggregateStatus;
 })
 
 .controller('SeparacaoDistribuicoesCtrl', function($scope, $stateParams, Distribuicao) {
 
-  Distribuicao.list({
-    dataDeRetirada: new Date($stateParams.dataDate)
+  Distribuicao.groupByReceptor({
+    dataDeRetirada: new Date($stateParams.dataDate) 
   })
-  .then(function (res) {
-    $scope.distribuicoes = res;
-  })
+  .then(function (distAggregates) {
+    $scope.distAggregates = distAggregates;
+  });
+
+  $scope.computeDistribuicaoAggregateStatus = Distribuicao.computeDistribuicaoAggregateStatus;
 
   $scope.dataDate = $stateParams.dataDate;
 })
 
-.controller('SeparacaoDetailCtrl', function($scope, $stateParams, Distribuicoes, $state, Distribuicao) {
+.controller('SeparacaoDetailCtrl', function($scope, $stateParams, $state, Distribuicao, $ionicHistory, $q) {
   $scope.receptorName = $stateParams.receptorName;
 
   $scope.receptorId = $stateParams.receptorId;
@@ -38,7 +40,7 @@ angular.module('cecamOp.controllers')
     $scope.distribuicoes = distribuicoes;
 
     console.log(distribuicoes);
-  })
+  });
 
   // $scope.distribuicoes = [
   // {
@@ -68,6 +70,18 @@ angular.module('cecamOp.controllers')
   // }];
 
   $scope.cancel = function () {
-    $state.go('tab.separacao-distribuicoes');
+    $ionicHistory.goBack();
   };
+
+  $scope.save = function () {
+
+    $q.all($scope.distribuicoes.map(function (dist) {
+      return Distribuicao.update(dist._id, dist);
+    }))
+    .then(function () {
+      $ionicHistory.goBack();
+    }, function (err) {
+      alert(err);
+    });
+  }
 });

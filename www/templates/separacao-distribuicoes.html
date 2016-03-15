@@ -1,24 +1,23 @@
 <!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
+  Prevent the view from caching
 -->
-<ion-view view-title="Distribuições">
+<ion-view
+  cache-view="false"
+  view-title="Distribuições">
   <ion-content>
   <h1 class="padding">{{ dataDate | date: 'dd MMMM yyyy' }}</h1>
     <ion-list class="list">
       <ion-item
         class="item"
-        ng-repeat="distribuicao in distribuicoes | unique:'receptor'"
+        ng-repeat="distAggregate in distAggregates | unique:'receptor'"
         type="item-text-wrap"
-        href="#/tab/separacao/{{ dataDate }}/{{ distribuicao.receptor._id }}/{{ distribuicao.receptor.nome }}">
-	        {{ distribuicao.receptor.nome }}
-	        <!-- <p>{{ distribuicao.date }}</p> -->
+        href="#/tab/separacao/{{ dataDate }}/{{ distAggregate.receptor._id }}/{{ distAggregate.receptor.nome }}">
+	        {{ distAggregate.receptor.nome }}
+	        <!-- <p>{{ distAggregate.date }}</p> -->
 			<span class="item-note" ng-class="{ 
-  			statusASeparar: distribuicao.status === 'a separar', 
-  			statusSeparando: distribuicao.status === 'separando', 
-  			statusProntoParaRetirar: distribuicao.status === 'pronto para retirar'}">{{ distribuicao.status }}
+  			statusASeparar: computeDistribuicaoAggregateStatus(distAggregate) === 'a-separar', 
+  			statusSeparando: computeDistribuicaoAggregateStatus(distAggregate) === 'separando', 
+  			statusProntoParaRetirar: computeDistribuicaoAggregateStatus(distAggregate) === 'separado'}">{{ computeDistribuicaoAggregateStatus(distAggregate) }}
       </span>
 		</ion-item>
     </ion-list>
