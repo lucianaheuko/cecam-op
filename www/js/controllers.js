@@ -215,14 +215,22 @@ angular.module('cecamOp.controllers', [])
 
         if (!produto) { throw new Error('produto nao encontrado'); }
 
-        return Operacao.create({
+        produto.validade = $scope.novaEntrada.validade;
+
+        var operacaoData = {
           produto: produto,
           quantidade: $scope.novaEntrada.quantidade,
           unidadeDeMedida: $scope.novaEntrada.unidadeDeMedida,
           tipo: 'entrada',
-        });
+        };
+
+        console.log(operacaoData);
+
+        return Operacao.create(operacaoData);
       })
       .then(function (entrada) {
+
+        console.log(entrada);
 
         $scope.isLoading = false;
 

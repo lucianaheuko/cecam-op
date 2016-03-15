@@ -16,7 +16,10 @@ angular.module('cecamOp.services', [])
     },
 
     create: function (data) {
-      return $http.post('http://localhost:4000/estoque/operacao', data);
+      return $http.post('http://localhost:4000/estoque/operacao', data)
+        .then(function (response) {
+          return response.data;
+        });
     }
   };
 })
