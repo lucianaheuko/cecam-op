@@ -107,7 +107,7 @@ angular.module('cecamOp', [
   })
 
   .state('tab.saida-detalhamento', {
-    url: '/saida/:saidaId',
+    url: '/saida/:dataDeRetirada/:receptorId/:receptorName',
     views: {
       'tab-saida': {
         templateUrl: 'templates/saida-detalhamento.html',

@@ -5,10 +5,10 @@
       <ion-item
         class="item"
         ng-repeat="saida in saidas"
-        href="#/tab/saida/{{ saida.id }}">
+        href="#/tab/saida/{{ saida.dataDeRetirada }}/{{ saida.receptor._id }}/{{ saida.receptor.nome }}">
 
-          <h2>{{ saida.name }}</h2>
-          <p>{{ saida.date | date:'dd MMMM yyyy' }}</p>
+        <h2>{{ saida.receptor.nome }}</h2>
+        <p>{{ saida.dataDeRetirada | date:'dd MMMM yyyy' }}</p>
       </ion-item>
     </ion-list>
 
