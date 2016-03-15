@@ -45,31 +45,15 @@ var db = {
       return item.id == requestedId;
     });
   },
-
-  // getById: function (requestedId) {
-
-  //   return new Promise(function (resolve, reject) {
-
-  //     setTimeout(function () {
-
-  //       resolve(_data.find(function (item) {
-  //         return item.id === requestedId;
-  //       }));
-
-  //     }, 2000);
-  //   });
-  // }
 };
 
 angular.module('cecamOp.controllers', [])
-
 
 .controller('EntradasCtrl', function($scope, $ionicModal, Operacao, Produto, Operacoes) {
 
   // retrieve all operations
   Operacao.list()
     .then(function (response) {
-      console.log(response.data);
       $scope.operacoes = response.data;
     });
 
@@ -114,7 +98,6 @@ angular.module('cecamOp.controllers', [])
   };
 
   $scope.$watch('novaEntrada.produtoId', function () {
-    console.log($scope.novaEntrada.produtoId);
 
     var produtoId = $scope.novaEntrada.produtoId;
 
@@ -134,7 +117,6 @@ angular.module('cecamOp.controllers', [])
   };
 
   $scope.createProduto = function () {
-    console.log('create');
 
     if (!$scope.novoProduto.descricao) {
       alert('Descrição é um campo obrigatório');
@@ -146,15 +128,10 @@ angular.module('cecamOp.controllers', [])
     })
     .then(function (response) {
 
-      console.log(response);
-
       var produto = response.data;
 
       // add the product to the produtosRegistrados array
       $scope.produtosRegistrados.push(produto);
-
-      console.log(produto._id);
-
       // set the selected product of the new entry as the
       // just created product
       $scope.novaEntrada.produtoId = produto._id;
@@ -208,9 +185,6 @@ angular.module('cecamOp.controllers', [])
     Produto.get($scope.novaEntrada.produtoId)
       .then(function (response) {
 
-        console.log(response);
-        console.log(response.data);
-
         var produto = response.data;
 
         if (!produto) { throw new Error('produto nao encontrado'); }
@@ -224,13 +198,9 @@ angular.module('cecamOp.controllers', [])
           tipo: 'entrada',
         };
 
-        console.log(operacaoData);
-
         return Operacao.create(operacaoData);
       })
       .then(function (entrada) {
-
-        console.log(entrada);
 
         $scope.isLoading = false;
 
@@ -253,24 +223,6 @@ angular.module('cecamOp.controllers', [])
         console.warn(err);
       });
 
-    // Operacao.create({
-    //   produto: {
-
-    //     descricao: $scope.novaEntrada.produto.descricao,
-    //     validade: $scope.novaEntrada.produto.validade,
-    //   },
-
-    //   quantidade: $scope.novaEntrada.quantidade,
-    //   unidadeDeMedida: $scope.novaEntrada.unidadeDeMedida,
-    //   tipo: 'entrada',
-
-    // })
-    // // Operacoes.$add({
-    // //   descricao: $scope.novaEntrada.descricao,
-    // //   validade: $scope.novaEntrada.validade,
-    // //   quantidade: $scope.novaEntrada.quantidade,
-    // //   unidadeDeMedida: $scope.novaEntrada.unidadeDeMedida,
-    // // })
   };
 
   /// NOVA ENTRADA ///
@@ -282,59 +234,6 @@ angular.module('cecamOp.controllers', [])
   $stateParams.entradaId;
 
   $scope.entrada = Operacoes.$getRecord($stateParams.entradaId);
-})
-
-.controller('SeparacaoDataCtrl', function($scope, Datas) {
-  $scope.datas =  Datas.all();
-})
-
-.controller('SeparacaoDistribuicoesCtrl', function($scope, Distribuicoes, $stateParams) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.distribuicoes = Distribuicoes.all();
-
-  $scope.dataDate = $stateParams.dataDate;
-})
-
-.controller('SeparacaoDetailCtrl', function($scope, $stateParams, Distribuicoes, $state) {
-  $scope.distribuicaoName = $stateParams.distribuicaoName;
-  $scope.distribuicaoDate = $stateParams.distribuicaoDate;
-  $scope.distribuicoes = [
-  {
-    id: 0,
-    name: 'Carmo',
-    date: '3 marc 2016',
-    descricao: 'leite',
-    validade: '30 Nov 2016',
-    quantidade: '30',
-    unidadeDeMedida: 'cx'
-  }, {
-    id: 1,
-    name: 'Carmo',
-    date: '3 marc 2016',
-    descricao: 'achocolatado em pó',
-    validade: '04 Abr 2016',
-    quantidade: '90',
-    unidadeDeMedida: 'cx'
-  }, {
-    id: 2,
-    name: 'Carmo',
-    date: '3 marc 2016',
-    descricao: 'biscoito club social sabor parmesão',
-    validade: '03 Jun 2016',
-    quantidade: '37',
-    unidadeDeMedida: 'cx'
-  }];
-
-  $scope.cancel = function () {
-    $state.go('tab.separacao-distribuicoes');
-  };
 })
 
 .controller('SaidaCtrl', function($scope) {

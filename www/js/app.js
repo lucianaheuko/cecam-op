@@ -5,7 +5,13 @@
 // the 2nd parameter is an array of 'requires'
 // 'cecamOp.services' is found in services.js
 // 'cecamOp.controllers' is found in controllers.js
-angular.module('cecamOp', ['ionic', 'cecamOp.controllers', 'cecamOp.services', 'firebase'])
+angular.module('cecamOp', [
+  'ionic',
+  'cecamOp.controllers',
+  'cecamOp.services',
+  'cecamOp.filters',
+  'firebase'
+])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -81,7 +87,7 @@ angular.module('cecamOp', ['ionic', 'cecamOp.controllers', 'cecamOp.services', '
   })
 
   .state('tab.separacao-detalhamento', {
-    url: '/separacao/:distribuicaoDate/:distribuicaoName',
+    url: '/separacao/:dataDeRetirada/:receptorId/:receptorName',
     views: {
       'tab-separacao': {
         templateUrl: 'templates/separacao-detalhamento.html',

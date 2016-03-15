@@ -41,6 +41,35 @@ angular.module('cecamOp.services', [])
 })
 
 
+.factory('Distribuicao', function ($http) {
+  return {
+    create: function (data) {
+      return $http.post('http://localhost:4000/estoque/distribuicao', data)
+        .then(function (response) {
+          return response.data;
+        });
+    },
+
+    list: function (query) {
+      return $http.get('http://localhost:4000/estoque/distribuicoes', {
+        params: query
+      })
+      .then(function (response) {
+        return response.data;
+      });
+    },
+
+    groupByDate: function () {
+      return $http.get('http://localhost:4000/estoque/distribuicao/groupByDate')
+        .then(function (response) {
+          return response.data;
+        });
+    }
+  }
+})
+
+
+
 .factory('Distribuicoes', function() {
   // Might use a resource here that returns a JSON array
 
@@ -106,5 +135,3 @@ angular.module('cecamOp.services', [])
     }
   };
 });
-
-

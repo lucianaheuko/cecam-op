@@ -7,8 +7,8 @@
 <ion-view view-title="Preparar distribuição">
   <ion-content class="padding">
 
-    <h1>{{ distribuicaoName }} </h1>
-    <p>à retirar em <b>{{ distribuicaoDate }}</b></p>
+    <h1>{{ receptorName }} </h1>
+    <p>à retirar em <b>{{ dataDeRetirada }}</b></p>
 
 
 
@@ -32,8 +32,8 @@
       <div class="card" ng-repeat="distribuicao in distribuicoes">
 
         <div class="item">
-            <h2>Produto: {{ distribuicao.descricao }}</h2>
-            <p>Validade: {{ distribuicao.validade | date:'dd MMMM yyyy' }}</p>
+            <h2>Produto: {{ distribuicao.produto.descricao }}</h2>
+            <p>Validade: {{ distribuicao.produto.validade | date:'dd MMMM yyyy' }}</p>
             <p>Quantidade: {{ distribuicao.quantidade }} {{ distribuicao.unidadeDeMedida}}</p>
             <!-- <ion-checkbox class="item" ng-model="filter.blue">Separado</ion-checkbox> -->
         </div>
