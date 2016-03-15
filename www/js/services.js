@@ -40,6 +40,21 @@ angular.module('cecamOp.services', [])
   }
 })
 
+.factory('Estoque', function ($http) {
+  return {
+    registerDelivery: function (distribuicaoId) {
+      return $http.post('http://localhost:4000/estoque/saida', {
+        distribuicao: {
+          _id: distribuicaoId
+        }
+      })
+      .then(function (response) {
+        return response.data;
+      });
+    }
+  }
+})
+
 
 .factory('Distribuicao', function ($http) {
   return {
@@ -66,8 +81,10 @@ angular.module('cecamOp.services', [])
       });
     },
 
-    groupByDate: function () {
-      return $http.get('http://localhost:4000/estoque/distribuicao/groupByDate')
+    groupByDate: function (query) {
+      return $http.get('http://localhost:4000/estoque/distribuicao/groupByDate', {
+          params: query
+        })
         .then(function (response) {
           return response.data;
         });
@@ -75,6 +92,15 @@ angular.module('cecamOp.services', [])
 
     groupByReceptor: function (query) {
       return $http.get('http://localhost:4000/estoque/distribuicao/groupByReceptor', {
+          params: query
+        })
+        .then(function (response) {
+          return response.data;
+        });
+    },
+
+    groupByDateAndReceptor: function (query) {
+      return $http.get('http://localhost:4000/estoque/distribuicao/groupByDateAndReceptor', {
           params: query
         })
         .then(function (response) {
@@ -103,7 +129,7 @@ angular.module('cecamOp.services', [])
         return 'separado';
       } else {
         // default fallback
-        return 'separando';
+        return '-';
       }
     }
   }

@@ -12,14 +12,14 @@
         ng-repeat="distAggregate in distAggregates | unique:'receptor'"
         type="item-text-wrap"
         href="#/tab/separacao/{{ dataDate }}/{{ distAggregate.receptor._id }}/{{ distAggregate.receptor.nome }}">
-	        {{ distAggregate.receptor.nome }}
-	        <!-- <p>{{ distAggregate.date }}</p> -->
-			<span class="item-note" ng-class="{ 
-  			statusASeparar: computeDistribuicaoAggregateStatus(distAggregate) === 'a-separar', 
-  			statusSeparando: computeDistribuicaoAggregateStatus(distAggregate) === 'separando', 
-  			statusProntoParaRetirar: computeDistribuicaoAggregateStatus(distAggregate) === 'separado'}">{{ computeDistribuicaoAggregateStatus(distAggregate) }}
-      </span>
-		</ion-item>
+        {{ distAggregate.receptor.nome }}
+
+        <span class="item-note" ng-switch="computeDistribuicaoAggregateStatus(distAggregate)">
+          <span class="statusASeparar" ng-switch-when="a-separar">à separar</span>
+          <span class="statusSeparando" ng-switch-when="separando">separando</span>
+          <span class="statusProntoParaRetirar" ng-switch-when="separado">separado</span>
+        </span>
+		  </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

@@ -140,6 +140,9 @@ angular.module('cecamOp.controllers', [])
 
       $scope.modalNovoProduto.hide();
 
+      // reset the values of the form
+      $scope.novoProduto = {};
+
       return produto;
     });
   };
@@ -235,14 +238,3 @@ angular.module('cecamOp.controllers', [])
 
   $scope.entrada = Operacoes.$getRecord($stateParams.entradaId);
 })
-
-.controller('SaidaCtrl', function($scope) {
-  $scope.saidas = db.listAll();
-
-})
-
-.controller('SaidaDetailCtrl', function($scope, $stateParams) {
-
-  $scope.resultado = db.getById($stateParams.saidaId);
-
-});

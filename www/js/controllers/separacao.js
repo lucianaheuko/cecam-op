@@ -3,7 +3,11 @@ angular.module('cecamOp.controllers')
 
 .controller('SeparacaoDataCtrl', function($scope, Distribuicao) {
 
-  Distribuicao.groupByDate()
+  Distribuicao.groupByDate({
+      status: {
+        $ne: 'retirado'
+      }
+    })
     .then(function (distAggregates) {
       $scope.datas = distAggregates;
     });
@@ -14,7 +18,10 @@ angular.module('cecamOp.controllers')
 .controller('SeparacaoDistribuicoesCtrl', function($scope, $stateParams, Distribuicao) {
 
   Distribuicao.groupByReceptor({
-    dataDeRetirada: new Date($stateParams.dataDate) 
+    dataDeRetirada: new Date($stateParams.dataDate),
+    status: {
+      $ne: 'retirado'
+    }
   })
   .then(function (distAggregates) {
     $scope.distAggregates = distAggregates;
@@ -34,40 +41,14 @@ angular.module('cecamOp.controllers')
 
   Distribuicao.list({
     'receptor._id': $stateParams.receptorId,
-    dataDeRetirada: $stateParams.dataDeRetirada
+    dataDeRetirada: $stateParams.dataDeRetirada,
+    status: {
+      $ne: 'retirado'
+    }
   })
   .then(function (distribuicoes) {
     $scope.distribuicoes = distribuicoes;
-
-    console.log(distribuicoes);
   });
-
-  // $scope.distribuicoes = [
-  // {
-  //   id: 0,
-  //   name: 'Carmo',
-  //   date: '3 marc 2016',
-  //   descricao: 'leite',
-  //   validade: '30 Nov 2016',
-  //   quantidade: '30',
-  //   unidadeDeMedida: 'cx'
-  // }, {
-  //   id: 1,
-  //   name: 'Carmo',
-  //   date: '3 marc 2016',
-  //   descricao: 'achocolatado em pó',
-  //   validade: '04 Abr 2016',
-  //   quantidade: '90',
-  //   unidadeDeMedida: 'cx'
-  // }, {
-  //   id: 2,
-  //   name: 'Carmo',
-  //   date: '3 marc 2016',
-  //   descricao: 'biscoito club social sabor parmesão',
-  //   validade: '03 Jun 2016',
-  //   quantidade: '37',
-  //   unidadeDeMedida: 'cx'
-  // }];
 
   $scope.cancel = function () {
     $ionicHistory.goBack();
