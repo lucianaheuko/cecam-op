@@ -4,7 +4,9 @@
   The FriendsCtrl pulls data from the Friends service (service.js)
   The Friends service returns an array of friend data
 -->
-<ion-view view-title="Detalhes de entrada">
+<ion-view
+  cache-view="false"
+  view-title="Detalhes de entrada">
   <ion-content class="padding">
     <h2>{{ entrada.descricao }}</h2>
 	<p>validade: {{ entrada.validade | date:'dd MMMM yyyy' }}</p>
