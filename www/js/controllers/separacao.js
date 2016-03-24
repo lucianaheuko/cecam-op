@@ -3,7 +3,11 @@ angular.module('cecamOp.controllers')
 
 .controller('SeparacaoDataCtrl', function($scope, Distribuicao) {
 
-  Distribuicao.groupByDate()
+  Distribuicao.groupByDate({
+      status: {
+        $ne: 'retirado'
+      }
+    })
     .then(function (distAggregates) {
       $scope.datas = distAggregates;
     });
@@ -15,6 +19,9 @@ angular.module('cecamOp.controllers')
 
   Distribuicao.groupByReceptor({
     dataDeRetirada: new Date($stateParams.dataDate),
+    status: {
+      $ne: 'retirado'
+    }
   })
   .then(function (distAggregates) {
     $scope.distAggregates = distAggregates;

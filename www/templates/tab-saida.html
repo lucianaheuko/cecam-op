@@ -1,4 +1,9 @@
-<ion-view view-title="Saídas">
+<!--
+  Prevent the view from caching
+-->
+<ion-view
+  cache-view="false"
+  view-title="Saídas">
   <ion-content>
     <ion-list class="list">
 
@@ -10,6 +15,10 @@
         <h2>{{ saida.receptor.nome }}</h2>
         <p>{{ saida.dataDeRetirada | date:'dd MMMM yyyy' }}</p>
       </ion-item>
+
+      <div ng-if="saidas.length === 0">
+        nenhuma saída preparada
+      </div>
     </ion-list>
 
   </ion-content>
