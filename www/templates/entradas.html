@@ -1,4 +1,9 @@
-<ion-view view-title="Entradas" ng-controller="EntradasCtrl">
+<!--
+  Prevent the view from caching
+-->
+<ion-view
+  cache-view="false"
+  view-title="Entradas">
   <ion-content class="padding">
     <h1 class="title">Entradas de doações</h1>
     <button class="button icon-left ion-plus button-positive" ng-click="openNovaEntradaModal()"> Nova entrada
