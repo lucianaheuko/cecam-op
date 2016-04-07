@@ -52,21 +52,6 @@ angular.module('cecamOp.services', [])
   }
 })
 
-.factory('Estoque', function ($http) {
-  return {
-    registerDelivery: function (distribuicaoId) {
-      return $http.post('http://localhost:4000/estoque/saida', {
-        distribuicao: {
-          _id: distribuicaoId
-        }
-      })
-      .then(function (response) {
-        return response.data;
-      });
-    }
-  }
-})
-
 
 .factory('Distribuicao', function ($http) {
   return {
@@ -122,15 +107,6 @@ angular.module('cecamOp.services', [])
           params: {
             dbQuery: query
           }
-        })
-        .then(function (response) {
-          return response.data;
-        });
-    },
-
-    groupByDateAndReceptor: function (query) {
-      return $http.get('http://localhost:4000/estoque/distribuicao/groupByDateAndReceptor', {
-          params: query
         })
         .then(function (response) {
           return response.data;
