@@ -42,9 +42,6 @@ angular.module('cecamOp.controllers')
   Distribuicao.list({
     'receptor._id': $stateParams.receptorId,
     dataDeRetirada: $stateParams.dataDeRetirada,
-    status: {
-      $ne: 'retirado'
-    }
   })
   .then(function (distribuicoes) {
     $scope.distribuicoes = distribuicoes;
