@@ -1,8 +1,11 @@
 <ion-view
   cache-view="false"
-  view-title="Detalhes das saídas">
+  view-title="Separações">
   <ion-content>
     <ion-list>
+      <div ng-if="datas.length === 0">
+        <p class="padding">Não há doações a separar</p>
+      </div>
       <ion-item
         class="item"
         ng-repeat="data in datas"

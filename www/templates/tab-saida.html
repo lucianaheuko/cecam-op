@@ -6,6 +6,9 @@
   view-title="Saídas">
   <ion-content>
     <ion-list class="list">
+      <div ng-if="saidas.length === 0">
+        <p class="padding">Não há previsão de saídas</p>
+      </div>
 
       <ion-item
         class="item"
@@ -15,11 +18,9 @@
         <h2>{{ saida.receptor.nome }}</h2>
         <p>{{ saida.dataDeRetirada | date:'dd MMMM yyyy' }}</p>
       </ion-item>
-
-      <div ng-if="saidas.length === 0">
-        nenhuma saída preparada
-      </div>
     </ion-list>
+
+
 
   </ion-content>
 </ion-view>
