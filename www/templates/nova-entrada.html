@@ -3,8 +3,9 @@
     <h1 class="title">Criar nova entrada</h1>
     <button class="button button-clear button-positive" ng-click="modalNovaEntrada.hide()">Cancelar</button>
   </ion-header-bar>
-  <ion-content>
-    <form ng-submit="createEntrada()">
+
+  <form ng-submit="createEntrada()">
+    <ion-content>
       <div class="list">
 <!--         <label class="item item-input item-stacked-label">
           <span class="input-label">Descrição</span>
@@ -38,12 +39,12 @@
           </select>
         </label>
       </div>
+    </ion-content>
 
-      <div class="padding">
-        <button class="button button-block button-positive" type="submit">
-          Finalizar
-        </button>
-      </div>
-    </form>
-  </ion-content>
+    <div id="nova-entrada-submit" class="padding">
+      <button class="button button-block button-positive" type="submit">
+        Finalizar
+      </button>
+    </div>
+  </form>
 </ion-modal-view>
