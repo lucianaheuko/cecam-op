@@ -16,7 +16,7 @@
         href="#/tab/saida/{{ saida.dataDeRetirada }}/{{ saida.receptor._id }}/{{ saida.receptor.nome }}">
 
         <h2>{{ saida.receptor.nome }}</h2>
-        <p>{{ saida.dataDeRetirada | date:'dd MMMM yyyy' }}</p>
+        <p>{{ saida.dataDeRetirada | date:"dd 'de' MMMM yyyy" }}</p>
       </ion-item>
     </ion-list>
 

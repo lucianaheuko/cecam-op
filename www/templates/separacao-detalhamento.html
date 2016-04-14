@@ -12,7 +12,7 @@
 
         <div class="item">
           <h2>Produto: {{ distribuicao.produto.descricao }}</h2>
-          <p>Validade: {{ distribuicao.produto.validade | date:'dd MMMM yyyy' }}</p>
+          <p>Validade: {{ distribuicao.produto.validade | date:"dd 'de' MMMM yyyy" }}</p>
           <p>Quantidade: {{ distribuicao.quantidade }} {{ distribuicao.unidadeDeMedida}}</p>
         </div>
           

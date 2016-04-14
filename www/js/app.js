@@ -10,7 +10,6 @@ angular.module('cecamOp', [
   'cecamOp.controllers',
   'cecamOp.services',
   'cecamOp.filters',
-  'firebase'
 ])
 
 .run(function($ionicPlatform) {

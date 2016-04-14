@@ -11,7 +11,7 @@
         ng-repeat="data in datas"
         type="item-text-wrap"
         href="#/tab/separacao/{{ data.dataDeRetirada }}">
-        <h2>{{ data.dataDeRetirada | date:'dd MMMM yyyy' }}</h2>
+        <h2>{{ data.dataDeRetirada | date:"dd 'de' MMMM yyyy" }}</h2>
       </ion-item>
     </ion-list>
   </ion-content>

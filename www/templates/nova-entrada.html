@@ -22,7 +22,11 @@
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Validade</span>
-          <input ng-model="novaEntrada.validade" type="date">
+          <input
+            ng-model="novaEntrada.validade"
+            required
+            min="{{ today | date: 'yyyy-MM-dd' }}"
+            type="date">
         </label>
         <label class="item item-input item-stacked-label">
           <span class="input-label">Quantidade</span>

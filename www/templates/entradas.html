@@ -8,38 +8,18 @@
     <h1 class="title">Entradas de doações</h1>
     <button class="button icon-left ion-plus button-positive" ng-click="openNovaEntradaModal()"> Nova entrada
     </button>
-
     <div>
-
       <div
         class="card"
         ng-repeat="operacao in operacoes">
-
         <a class="no-decoration">
-
           <div class="item item-body">
             <h2>{{ operacao.produto.descricao }}</h2>
-            <p>{{ operacao.produto.validade | date:'dd MMMM yyyy' }}</p>
+            <p>{{ operacao.produto.validade | date:"dd 'de' MMMM yyyy" }}</p>
             <p>{{ operacao.quantidade }} {{ operacao.unidadeDeMedida}}</p>
           </div>
         </a>
       </div>
     </div>
-<!-- 
-    <div class="list">
-
-      <div
-        class="list card"
-        ng-repeat="operacao in operacoes"
-        href="#/tab/entradas/{{ operacao.$id }}">
-
-        <div class="item item-body">
-          <h2>{{ operacao.descricao }}</h2>
-          <p>{{ operacao.validade | date:'dd MMMM yyyy' }}</p>
-          <p>{{ operacao.quantidade }} {{ operacao.unidadeDeMedida}}</p>
-        </div>
-      </div>
-    </div> -->
-
   </ion-content>
 </ion-view>

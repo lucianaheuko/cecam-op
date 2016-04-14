@@ -5,6 +5,7 @@
     "ionic": "driftyco/ionic-bower#1.2.4"
   },
   "dependencies": {
-    "angularfire": "~1.1.4"
+    "angularfire": "~1.1.4",
+    "angular-i18n": "^1.5.3"
   }
 }

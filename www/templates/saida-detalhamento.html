@@ -4,14 +4,14 @@
   <ion-content class="padding">
 
     <h1>{{ receptorName }} </h1>
-    <p>à retirar em <b>{{ dataDeRetirada | date: 'dd MMMM yyyy' }}</b></p>
+    <p>à retirar em <b>{{ dataDeRetirada | date:"dd 'de' MMMM yyyy" }}</b></p>
     <div
       class="list card"
       ng-repeat="saida in saidas">
 
       <div class="item">
         <h2>Produto: {{ saida.produto.descricao }}</h2>
-        <p>Validade: {{ saida.produto.validade | date:'dd MMMM yyyy' }}</p>
+        <p>Validade: {{ saida.produto.validade | date:"dd 'de' MMMM yyyy" }}</p>
         <p>Quantidade: {{ saida.quantidade }} {{ saida.unidadeDeMedida}}</p>
       </div>
       <ion-checkbox

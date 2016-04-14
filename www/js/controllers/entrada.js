@@ -1,6 +1,8 @@
 angular.module('cecamOp.controllers')
 
-.controller('EntradasCtrl', function($scope, $ionicModal, Operacao, Produto) {
+.controller('EntradasCtrl', function($scope, $ionicModal, $ionicPopup, $timeout, $rootScope, $filter, Operacao, Produto) {
+  // set today's date onto the scope
+  $scope.today = new Date();
 
   // retrieve all operations
   Operacao.list({
@@ -26,6 +28,7 @@ angular.module('cecamOp.controllers')
   $ionicModal.fromTemplateUrl('templates/nova-entrada.html', {
     scope: $scope,
     animation: 'slide-in-up',
+    focusFirstInput: true,
   })
   .then(function (modal) {
     $scope.modalNovaEntrada = modal;
@@ -33,7 +36,8 @@ angular.module('cecamOp.controllers')
 
   $ionicModal.fromTemplateUrl('templates/novo-produto.html', {
     scope: $scope,
-    animation: 'slide-in-up'
+    animation: 'slide-in-up',
+    focusFirstInput: true,
   })
   .then(function (modal) {
     $scope.modalNovoProduto = modal;
@@ -85,12 +89,15 @@ angular.module('cecamOp.controllers')
 
       // add the product to the produtosRegistrados array
       $scope.produtosRegistrados.push(produto);
-      // set the selected product of the new entry as the
-      // just created product
-      $scope.novaEntrada.produtoId = produto._id;
 
-      // TODO: make the newly created product the selected one on the UI
-
+      $timeout(function () {
+        // set the selected product of the new entry as the
+        // just created product
+        // wait for changes to be applied before
+        // setting value
+        $scope.novaEntrada.produtoId = produto._id;
+      }, 0);
+      
       $scope.modalNovoProduto.hide();
 
       // reset the values of the form
@@ -114,10 +121,8 @@ angular.module('cecamOp.controllers')
 
   $scope.createEntrada = function () {
 
-    $scope.isLoading = true;
-
     // run validations
-    if (!$scope.novaEntrada.produtoId) {
+    if (!$scope.novaEntrada.produtoId || $scope.novaEntrada.produtoId === '__new__') {
       alert('Produto é um campo obrigatório');
       return;
     }
@@ -137,6 +142,11 @@ angular.module('cecamOp.controllers')
       return;
     }
 
+    if (!$scope.novaEntrada.unidadeDeMedida) {
+      alert('Por favor insira a unidade de medida');
+      return;
+    }
+
     // retrieve the selected product
     Produto.get($scope.novaEntrada.produtoId)
       .then(function (response) {
@@ -147,36 +157,69 @@ angular.module('cecamOp.controllers')
 
         produto.validade = $scope.novaEntrada.validade;
 
-        var operacaoData = {
+        var entradaData = {
           produto: produto,
           quantidade: $scope.novaEntrada.quantidade,
           unidadeDeMedida: $scope.novaEntrada.unidadeDeMedida,
           tipo: 'entrada',
         };
 
-        return Operacao.create(operacaoData);
-      })
-      .then(function (entrada) {
+        var template = [
+          '<div class="list card">',
+            '<div class="item">',
+              '<label>produto</label>',
+              '<h2>' + entradaData.produto.descricao + '</h2>',
+            '</div>',
+            '<div class="item">',
+              '<label>validade</label>',
+              '<h2>',
+                $filter('date')(new Date(entradaData.produto.validade), 'dd \'de\' MMMM yyyy'),
+              '</h2>',
+            '</div>',
+            '<div class="item">',
+              '<label>quantidade</label>',
+              '<h2>' + entradaData.quantidade + ' ' + entradaData.unidadeDeMedida + '</h2>',
+            '</div>',
+          '</div>'
+        ].join('');
 
-        $scope.isLoading = false;
+        return $ionicPopup.confirm({
+          title: 'Confirmar entrada', // String. The title of the popup.
+          // cssClass: '', // String, The custom CSS class name
+          subTitle: 'Por favor verifique se os seguintes dados estão corretos', // String (optional). The sub-title of the popup.
+          template: template, // String (optional). The html template to place in the popup body.
+          cancelText: 'Cancelar', // String (default: 'Cancel'). The text of the Cancel button.
+          cancelType: '', // String (default: 'button-default'). The type of the Cancel button.
+          okText: 'Confirmar', // String (default: 'OK'). The text of the OK button.
+          okType: '', // String (default: 'button-positive'). The type of the OK button.
+        })
+        .then(function (confimed) {
+          if (confimed) {
+            // operacao creation here
+            return Operacao.create(entradaData)
+              .then(function (entrada) {
 
-        // reset the novaEntrada's data
-        $scope.novaEntrada = {
-          produtoId: '',
-          validade: '',
-          quantidade: '',
-          unidadeDeMedida: 'cx',
-        };
+                // reset the novaEntrada's data
+                $scope.novaEntrada = {
+                  produtoId: '',
+                  validade: '',
+                  quantidade: '',
+                  unidadeDeMedida: 'cx',
+                };
 
-        // push the new entry to the entries array
-        $scope.operacoes.unshift(entrada);
+                // push the new entry to the entries array
+                $scope.operacoes.unshift(entrada);
 
-        // close the modal
-        $scope.modalNovaEntrada.hide();
-      }, function (err) {
-        $scope.isLoading = false;
-
-        console.warn(err);
+                // close the modal
+                $scope.modalNovaEntrada.hide();
+              }, function (err) {
+                console.warn(err);
+              });
+          } else {
+            // entrada cancelada
+            console.log('entrada cancelada')
+          }
+        })
       });
 
   };
